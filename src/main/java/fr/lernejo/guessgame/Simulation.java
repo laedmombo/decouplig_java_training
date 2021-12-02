@@ -3,6 +3,7 @@ import fr.lernejo.logger.Logger;
 import fr.lernejo.logger.LoggerFactory;
 import org.w3c.dom.ls.LSOutput;
 
+import java.util.Date;
 import java.util.Scanner;
 
 public class Simulation {
@@ -41,13 +42,29 @@ public class Simulation {
       }
   }
 
-  public void loopUntilPlayerSucceed() {
+  public void loopUntilPlayerSucceed(long itMax) {
     //TODO implement me
+      long duree ;
+      long secondes ;
+      long min ;
+      long mili ;
+      long dateFin;
       boolean bool;
-      do{
-          bool = nextRound();
+      for (long i=1;i<itMax;i++){
+          long dateDebut = System.currentTimeMillis(); //Relever l'heure a la fin du progamme (en milliseconde)
+          bool=nextRound();
+          if(bool) {
+              dateFin = System.currentTimeMillis();
+              duree=dateFin-dateDebut;
+              secondes = duree / 1000;
+              min = secondes / 60;
+              mili = duree % 1000;
+              logger.log("Nombre trouvé avant la limite d’itération :"+itMax+"en ="+min+":"+secondes+"."+mili);
+              System.exit(0);
+          }
       }
-      while (bool!=true);
+
+      logger.log("Nombre n'a pas trouvé avant la limite d’itération :");
       }
   }
 
